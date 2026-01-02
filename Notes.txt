@@ -1,0 +1,268 @@
+github repo:  https://github.com/nehashaw700/react-course
+
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/nehashaw700/react_course.git   //this has to be done only once to add remote
+git push -u origin main
+
+package.json is a configuration for npm. keeps track of what version is installed.
+bundler (webpack, parcel ) -> whole code needs to be bundled, cleaned, compressed.
+dependencies -> dev dependency or -D
+^ upgrades minor version automatically while ~ upgrades major version. Its safe to keep ^.
+
+package-lock.json keeps a record of all exact version/dependencies installed
+
+node_modules contains all the code that came from npm. Its kind of database of all dependencies.
+Every dependency that we have installed have a package.json. which means it again has a set of dependencies. Hence, node modules bloats up.
+
+package.json and package-lock.json can regenerate node modules via npm install. 
+hence code of node_modules does not go into prod. .gitignore file tracks which file has to be ignored.
+On server, node modules are not deployed. they are regenerated from package.json
+
+npx parcel index.html // parcel has created a server for us and has build/ hosted an app on server
+
+React is a js package. CDN links is not a preferred way of including react. as each time it would make network calls to the links which is costly.hence it would be good to have it inside our node_modules. // npm install react. No -D as we do not want it as dev dependency
+
+Parcel:
+Documentation: parceljs.org
+* It automatically reloads when we save changes // HOT Module Replacement (HMR)
+* It uses a file watching algo written in C++. 
+* It keeps the track in cache file (.parcel-cache). which leads to faster builds
+* Does image optimisation, minification , bundling, compressing
+* Consistent Hashing
+* Code Splitting
+* Differential Bundling (support older browsers by generating nomodules bundles)
+* Diagnostic
+* Error Handling
+* HTTPs
+* Tree Shaking - remove unused code
+
+dist: dist folder goes into production
+dist, parcel-cache can be automatically regenerated. so it can be added inside node_module
+
+browsers-lists: contains version list which are supported
+
+npm run start () or npm start is same
+
+------------------------------- xxxxxxxxxxxxxxxxxxxxxxxx ----------------------------------------
+
+React COMPONENTS:
+Class Based Components (Old)
+Functional Components (New) -->
+Normal JS Function which returns some JSX or react element
+
+Component Composition => component inside a component
+
+-------------------------------------------------------
+Functional Component:
+a normal js Function that returns a pc of jsx
+
+Class based Component:
+a normal js class which calls render() and returns a pc of jsx
+extends React Component
+pass props via constructor n call super(props) --> calling super() is mandate as reactComponent only then assigns props to this.props
+state var creation -> this.state = { count : 0, sum = 0} // state will contain all the state vars count, sum;
+Never update state vars directly -->
+this.setState({
+    count: this.state.count + 1;
+    sum: this.state.sum + 1;
+})
+-----------------------------------------------------------------------------------
+Lifecycle -> constructor() is called -> render() -> componentDidMount()
+suppose we have 2 components parent n child
+Parent Constructor()
+Parent render() 
+
+// inside render, parent encounter child comp. so Lifecycle of child comp is triggered.
+Child Constructor() 
+Child render()
+Child componentDidMount()
+
+// will be called when parent is completely rendered()
+Parent componentDidMount() 
+
+
+--------xxxxxxxxxxxxxxxxxxxxxxxx----------------------------
+Lifecyle suppose we have 2 child components 
+Parent Constructor()
+Parent render() 
+
+Child1 Constructor() 
+Child1 render()
+
+Child2 Constructor() 
+Child2 render()
+
+Child1 componentDidMount()
+Child2 componentDidMount()
+
+Parent componentDidMount() 
+
+projects.wojtekmaj.pl/react-Lifecycle-methods-diagram
+Has 2 phases: Render Phase , commit Phase
+Constructor and Render is Render Phase
+for two parallel child comp, reacts badges the render phase. hence renders for both the comp happens one after another. this is done for optimisation.
+and calls commit phase, 
+
+commit phase-> DOM updation/manipulation which is very expensive and time taking. hence react renders all child components at once and then moves to commit phase
+DOM manipulation (in Single Batch)
+
+This makes React fast.
+
+
+-------------------------------------------------------
+
+Use case of componentDidMount()
+1. Make api calls here --> bcoz react does not wait for api calls and renders the component. so after the comp is rendered completely, we make api calls.
+--------------------------------------------------------------------------
+
+Custom Hooks:
+Single Responsibility Principle --> good way of maintaining in a modular fashion
+Code becomes reuseable, maintainable, testable
+
+Building large scale application:
+Bundlers bundles all the components/ files into a single js file. now if 1000s of components are bundled, size increases. 
+Optimal solution -> Chunking/Code Splitting and Lazy Loading/ On demand Loading
+
+--------------------------------------------------------------------------
+Controlled and UnControlled Component
+when a component is Controlled by parent
+------------------------------------------------------------------------------------
+
+REACT INTERVIEW TOPICS:
+
+* Diff btw useState and useRef? when to chose what?
+* state vs props
+* Controlled and UnControlled Component
+* useState, useRef, useMemo, useEffect, custom Hooks
+* Redux flow(strore --> action --> reducer)
+* why redux over context
+* React Router (protected routes, dynamic routing)
+* limitations of react in building large scale application
+* virtual dom, 
+* can react hooks fully replace redux for state management. why or why not?
+* best practices for managing state in large apps?
+*  How would you optimize performance in a React app with large component trees?
+* Code splitting, lazy loading, tree shaking
+* Component Lifecycle
+* Memoization
+* REST API and HTTP methods
+
+6. Explain React's Strict Mode and its impact on development.
+
+7. How can you prevent unnecessary re-renders in React functional components?
+
+8. Describe the key differences between functional and class components in React.
+
+9. What is the significance of the React Fiber architecture?
+
+10. How does React handle side effects, and how can you manage them effectively?
+
+11. Explain the differences between `useMemo()` and `useCallback()` in React.
+
+12. How would you implement dynamic form handling and validation in React?
+
+13. What is lazy loading in React, and how does it improve application performance?
+
+14. How would you handle errors in a React app, and what is the role of error boundaries?
+
+15. What are the benefits of server-side rendering (SSR) in React applications?
+
+16. How do you handle styling in React components? Discuss different approaches.
+
+17. How would you pass data between sibling components in React without using Redux?
+
+18. Explain the use case of `useEffect()` for fetching data from an API.
+
+19. How do you handle asynchronous operations in React using `async/await` or Promises?
+
+20. How would you re-render a component when the window is resized?
+
+21. Describe how React Context API can be used for state management in an app.
+
+25. Explain the difference between shallow and deep comparison in React's `shouldComponentUpdate`.
+
+26. How do you handle asynchronous code execution and state updates in React?
+
+28. What are higher-order components (HOCs) in React, and how are they used?
+
+30. Explain React's reconciliation process and how it updates the DOM efficiently. 
+
+1. Why does useEffect run twice on initial render in development? (Hint: React Strict Mode)
+
+2. What’s the difference between useEffect(() => {}, []) and useEffect(() => {}, [state]) if state never changes?
+
+3. Why might a component using React.memo still re-render? (Hint: referential equality)
+
+4. Can useState updates be batched outside of event handlers? Why or why not?
+
+5. What happens if you call a hook inside a conditional or a loop? Why exactly is it wrong?
+
+6. How does useCallback help with React.memo and when does it become useless overhead?
+
+7. What is the difference between useRef and useState when storing a mutable value?
+
+8. Why is using setInterval inside useEffect tricky? What must you do to access latest state?
+
+9. How can stale closures affect your useEffect or setTimeout calls?
+
+10. Why might passing a function prop like onClick​={() => doSomething()} break memoization?
+
+11. When does a component re-render even if state/props haven’t changed?
+
+12. Why doesn't useEffect fire when a deeply nested object inside state changes?
+
+13. What’s the actual difference between useEffect and useLayoutEffect in terms of timing?
+
+14. How would you persist state across component unmounts without using Redux or context?
+
+15. Can a useEffect cleanup function run after every render? When?
+
+16. What’s the best way to debounce a value using hooks?
+
+17. Why is using index as key in a list sometimes dangerous? Can you give a practical example?
+
+18. What are the risks of using derived state in React?
+
+19. How do you detect if a component is still mounted before calling setState in an async operation?
+
+
+JavaScript Coding (MOST ASKED)
+
+1️⃣ Implement debounce() from scratch
+2️⃣ Implement throttle() from scratch
+3️⃣ Flatten a deeply nested array and object both
+4️⃣ Polyfill for map, filter, reduce
+5️⃣ Remove duplicates from an array (without using Set)
+6️⃣ Deep clone an object
+7️⃣ Find the first non-repeating character in a string
+8️⃣ Implement memoization
+9️⃣ Convert callback-based function to Promise
+🔟 Write a custom bind() polyfill
+
+ Currying for Infinite Sum
+👉 sum(10)(20)(30)() → 60
+👉 sum(10)(20)(30)(40)(50)(60)() → 210
+
+🔹 React Coding (Live Round Favorites)
+
+• Build a counter with start / pause / reset
+• Create a search filter with debouncing
+• Implement controlled vs uncontrolled input
+• Build a Todo app with add/edit/delete
+• Create sorting & pagination from scratch
+• Render a dynamic form from JSON
+• Prevent unnecessary re-renders in a component
+• Implement lazy loading manually
+
+🔹 DOM & Browser Coding
+
+• Event delegation implementation
+• Build a modal from scratch (no libraries)
+• Implement infinite scrolling
+• Drag & drop , dropdown using vanilla JS
+• Detect click outside an element
+
+
